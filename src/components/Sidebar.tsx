@@ -53,7 +53,7 @@ export default function Sidebar({userName = "Natnicha" , type = "student"}: Side
             color="green"
             withBorder
           >
-            <Avatar size="lg" radius="xl" src="public\profile.jpg" />
+            <Avatar size="lg" radius="xl" src="profile.jpg" />
           </Indicator>
           <Text>User : {userName} : {type} </Text>
         </Group>
