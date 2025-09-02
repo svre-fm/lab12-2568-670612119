@@ -20,6 +20,7 @@ interface Task {
   description: string;
   isDone: boolean;
   dueDate: Date | null;
+  doneDate: Date | null;
 }
 
 export default function HomePage() {
@@ -30,6 +31,7 @@ export default function HomePage() {
       description: "Vite + React + Mantine + TS",
       isDone: false,
       dueDate: new Date(),
+      doneDate: null,
     },
     {
       id: "2",
@@ -37,6 +39,7 @@ export default function HomePage() {
       description: "Finish project for class",
       isDone: false,
       dueDate: new Date(),
+      doneDate: null,
     },
     {
       id: "3",
@@ -44,6 +47,7 @@ export default function HomePage() {
       description: "Push project to GitHub Pages",
       isDone: false,
       dueDate: new Date(),
+      doneDate: null,
     },
   ]);
   const lorem = new LoremIpsum({
@@ -64,6 +68,7 @@ export default function HomePage() {
       description: lorem.generateWords(10),
       isDone: false,
       dueDate: new Date(),
+      doneDate: null,
     };
     setTasks((prev) => [...prev, newTask]);
   };
@@ -78,6 +83,12 @@ export default function HomePage() {
     setTasks((prev) =>
       prev.map((t) => (t.id === taskId ? { ...t, isDone: !t.isDone } : t))
     );
+    setTasks((prev) =>
+      prev.map((t) => (t.id === taskId && t.isDone ? { ...t, doneDate: new Date() } : t))
+    );
+    setTasks((prev) =>
+      prev.map((t) => (t.id === taskId && !t.isDone ? { ...t, doneDate: null } : t))
+    );
   };
 
   return (
@@ -90,7 +101,7 @@ export default function HomePage() {
         {/* เพิ่ม Task */}
         <Button onClick={handleAdd}>Add Task</Button>
         {/* แสดง Task Cards */}
-        <Stack w="100%">
+         <Stack w="100%">
           {tasks.map((task) => (
             <Card withBorder shadow="sm" radius="md" mb="sm" key={task.id}>
               <Group justify="space-between" align="flex-start">
@@ -112,31 +123,31 @@ export default function HomePage() {
                     </Text>
                   )}
                   {/* แสดง Date & Time */}
-                  <Text size="xs" c="gray">
-                    Done at:
-                  </Text>
+                  {task.doneDate && (
+                    <Text size="xs" c="natnicha">
+                      Done: {task.doneDate.toLocaleString()}
+                    </Text>
+                  )}
                 </Stack>
                 {/* แสดง Button Done & Button Delete */}
                 <Group>
-                  <Button
-                    style={{
-                      backgroundColor: "#71c32fda",
-                      color: "#dce6e7ff",
-                    }}
+                  <Checkbox
+                    label="Done"
                     variant="light"
                     size="xs"
                     onClick={() => toggleDoneTask(task.id)}
-                  >
-                    Done
-                  </Button>
-                  <Button
-                    color="chanadda"
+                  />
+                  <ActionIcon
                     variant="light"
-                    size="xs"
+                    color="red"
+                    aria-label="Settings"
                     onClick={() => deleteTask(task.id)}
                   >
-                    Delete
-                  </Button>
+                    <IconTrash
+                      style={{ width: "70%", height: "70%" }}
+                      stroke={1.5}
+                    />
+                  </ActionIcon>
                 </Group>
               </Group>
             </Card>
