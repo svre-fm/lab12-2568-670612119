@@ -13,7 +13,7 @@ interface SidebarComponentProps  {
   type?: "admin" |"student";
 }
 export type { SidebarComponentProps };
-export default function Sidebar(userName = "natnicha" , type = "student" ) {
+export default function Sidebar({userName = "Natnicha" , type = "student"}: SidebarComponentProps) {
   return (
     <Stack
       align="stretch"
@@ -55,7 +55,7 @@ export default function Sidebar(userName = "natnicha" , type = "student" ) {
           >
             <Avatar size="lg" radius="xl" src="public\profile.jpg" />
           </Indicator>
-          <Text>User : natnicha : {type} </Text>
+          <Text>User : {userName} : {type} </Text>
         </Group>
       </Box>
     </Stack>
